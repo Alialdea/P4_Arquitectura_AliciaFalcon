@@ -7,7 +7,7 @@ const tardisSchema = new Schema( {
   camuflaje: { type: String, required: true },
   nRegeneracion: { type: Number, required: true },
   year: { type: Number, required: true },
-  arrDimensiones: [{type: mongoose.Schema.Types.ObjectId,
+  dimensiones: [{type: mongoose.Schema.Types.ObjectId,
                     ref: "Dimension",
                     required: true,
                   }],

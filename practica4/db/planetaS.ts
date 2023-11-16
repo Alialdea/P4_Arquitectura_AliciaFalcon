@@ -5,7 +5,7 @@ const Schema = mongoose.Schema;
 
 const planetaSchema = new Schema( {
   nombre: { type: String, required: true },
-  arrPersonas : [{type: mongoose.Schema.Types.ObjectId,
+  personas : [{type: mongoose.Schema.Types.ObjectId,
                   ref: "Persona",
                   required: true,
                 }],

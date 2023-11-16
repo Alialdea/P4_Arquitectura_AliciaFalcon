@@ -8,20 +8,20 @@ export type Persona={
 export type Planeta={
     nombre: string,
     idPlaneta: mongoose.Types.ObjectId,
-    arrPersonas : Persona[]
+    personas : Persona[]
 }
 
 export type Dimension={
     nombre: string,
     idDimension: mongoose.Types.ObjectId,
-    arrPlanetas : Planeta[]
+    planetas : Planeta[]
 }
 
 export type Tardis={
     camuflaje:string,
     nRegeneracion:number,
     year: number,
-    arrDimensiones : Dimension[],
+    dimensiones : Dimension[],
     
     idTardis: mongoose.Types.ObjectId
 }

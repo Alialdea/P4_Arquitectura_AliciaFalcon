@@ -1,17 +1,23 @@
 // @deno-types="npm:@types/express@4"
 import { Request, Response } from "express";
 import { Persona } from "../types.ts";
-
-import { PersonaModel } from "../db/persona.ts";
+import { PersonaModel, PersonaModelType } from "../db/persona.ts";
 import { transformPersonaModel } from "../controllers/transformPersonaModel.ts";
 
-export const getPersona = async (
-  req: Request<{ id: string }>,
+export const putPersona = async (
+  // deno-lint-ignore ban-types
+  req: Request<{ id: string }, {}, PersonaModelType>,
   res: Response<Persona | { error: unknown }>
 ) => {
   const id = req.params.id;
+  const { nombre, edad } = req.body;
   try {
-    const persona = await PersonaModel.findById(id).exec();
+    const persona = await PersonaModel.findByIdAndUpdate(
+      id,
+      { nombre, edad },
+      { new: true, runValidators: true }
+    );
+
     if (!persona) {
       res.status(404).send({ error: "Persona not found" });
       return;
@@ -22,4 +28,3 @@ export const getPersona = async (
     res.status(500).send(error);
   }
 };
-

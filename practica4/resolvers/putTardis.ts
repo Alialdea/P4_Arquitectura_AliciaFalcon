@@ -1,17 +1,23 @@
 // @deno-types="npm:@types/express@4"
 import { Request, Response } from "express";
 import { Tardis } from "../types.ts";
-
-import { TardisModel } from "../db/tardis.ts";
+import { TardisModel, TardisModelType } from "../db/tardis.ts";
 import { transformTardisModel } from "../controllers/transformTardisModel.ts";
 
-export const getTardis = async (
-  req: Request<{ id: string }>,
+export const putTardis = async (
+  // deno-lint-ignore ban-types
+  req: Request<{ id: string }, {}, TardisModelType>,
   res: Response<Tardis | { error: unknown }>
 ) => {
   const id = req.params.id;
+  const { nombre,camuflaje, nreg, anio, dimensiones } = req.body.toObject();
   try {
-    const tardis = await TardisModel.findById(id).exec();
+    const tardis = await TardisModel.findByIdAndUpdate(
+      id,
+      { nombre, camuflaje, nreg, anio, dimensiones },
+      { new: true, runValidators: true }
+    );
+
     if (!tardis) {
       res.status(404).send({ error: "Tardis not found" });
       return;
